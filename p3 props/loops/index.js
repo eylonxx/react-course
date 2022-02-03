@@ -2,7 +2,10 @@ class App extends React.Component{
     render(){
         return(
             <div>
-                <Hello to="Inbar" bangs={4} />
+            <Friend
+                name="Inbar"
+                hobbies={['Piano', 'Singing', 'Dancing']}
+            />            
             </div>
         )
     }

@@ -1,0 +1,12 @@
+.Machine {
+    border: 1px solid black;
+    background-color: azure;
+}
+.Machine-winner {
+    color: white;
+    background-color: green;
+}
+.Machine-loser {
+    color: white;
+    background-color: red;
+}

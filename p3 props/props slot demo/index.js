@@ -1,7 +1,7 @@
 class App extends React.Component{
     render() {
-        return(
-            <div>
+        return(  //class -> className, for -> htmlFor
+            <div className="Machine">
                 <h1>Slot Machines!</h1>
                 <Machine
                 s1="🍏"
