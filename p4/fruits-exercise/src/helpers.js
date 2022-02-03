@@ -1,5 +1,5 @@
 const choice = (items) => {
-    return items[Math.floor(Math.random()) * items.length];
+    return items[Math.floor(Math.random() * items.length)];
 }
 
 const remove = (items, item) => {
