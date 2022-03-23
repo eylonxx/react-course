@@ -3,7 +3,8 @@ import './Dice.css';
 
 class Dice extends Component {
   render() {
-    return <i className={`Dice fas fa-dice-${this.props.face}`}></i>;
+    const { face, rolling } = this.props;
+    return <i className={`Dice fas fa-dice-${face} ${rolling ? 'rolling' : null}`}></i>;
   }
 }
 
