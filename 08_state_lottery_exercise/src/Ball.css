@@ -1,0 +1,11 @@
+.Ball {
+  width: 100px;
+  height: 100px;
+  background-color: tomato;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 3rem;
+}
