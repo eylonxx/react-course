@@ -86,6 +86,11 @@ class Board extends Component {
     // TODO
     // make table board
     // TODO
+    return (
+      <div>
+        <h1>hi</h1>
+      </div>
+    );
   }
 }
 
