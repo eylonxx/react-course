@@ -1,0 +1,11 @@
+.Board-cards {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.Board-score {
+  font-size: 3rem;
+  display: flex;
+  justify-content: center;
+}

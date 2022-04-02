@@ -11,4 +11,18 @@ import ulti from './images/ulti.jpg';
 import whoswho from './images/whoswho.jpg';
 import xdrake from './images/xdrake.jpg';
 
+export const names = [
+  'babanuki',
+  'blackmaria',
+  'holedem',
+  'jack',
+  'kaidou',
+  'king',
+  'pageone',
+  'queen',
+  'sasaki',
+  'ulti',
+  'whoswho',
+  'xdrake',
+];
 export default [babanuki, blackmaria, holedem, jack, kaidou, king, pageone, queen, sasaki, ulti, whoswho, xdrake];

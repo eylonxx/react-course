@@ -1,0 +1,19 @@
+.Card {
+  width: 280px;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  border: 2px solid black;
+  border-radius: 10px;
+  background-color: #84255a;
+}
+.Card img {
+  width: 120px;
+  height: 120px;
+  margin-top: 30px;
+}
+.Card h3 {
+  font-size: 2rem;
+}
