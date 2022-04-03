@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export default class ShoppingList extends Component {
+class ShoppingList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,7 +20,6 @@ export default class ShoppingList extends Component {
 
   handleSubmit(evt) {
     evt.preventDefault();
-    console.log('hi');
     this.props.addItem(this.state);
     this.setState({ username: '', email: '', password: '' });
   }
@@ -38,3 +37,5 @@ export default class ShoppingList extends Component {
     );
   }
 }
+
+export default ShoppingList;
