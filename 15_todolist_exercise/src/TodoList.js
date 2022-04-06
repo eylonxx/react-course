@@ -8,7 +8,7 @@ export default class TodoList extends Component {
       todoList: [],
     };
     this.addTodo = this.addTodo.bind(this);
-    this.editTodo = this.editTodo.bind(this);
+    this.updateTodo = this.updateTodo.bind(this);
   }
 
   addTodo(todo) {
@@ -18,10 +18,15 @@ export default class TodoList extends Component {
   removeTodo(id) {
     this.setState({ todoList: this.state.todoList.filter((todo) => todo.id !== id) });
   }
-
-  editTodo(id) {
-    let chosen = this.state.todoList.find((todo) => todo.id === id);
-    console.log(chosen);
+  updateTodo(id, updatedText) {
+    const updatedTodos = this.state.todoList.map((todo) => {
+      if (todo.id === id) {
+        return { ...todo, todoText: updatedText };
+      } else {
+        return todo;
+      }
+    });
+    this.setState({ todoList: updatedTodos });
   }
 
   render() {
@@ -39,7 +44,7 @@ export default class TodoList extends Component {
               editTodo={() => {
                 this.editTodo(todo.id);
               }}
-              isEdit={todo.edit}
+              updateTodo={this.updateTodo}
             />
           ))}
         </ul>
