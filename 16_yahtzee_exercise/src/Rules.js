@@ -60,18 +60,20 @@ class SumDistro extends Rule {
 class FullHouse extends Rule {
   // TODO
   evalRoll = (dice) => {
-    if (this.freq(dice).includes(2) && this.freq(dice).includes(3)) {
-      return this.score;
-    } else {
-      return 0;
-    }
+    this.freq(dice).includes(2) && this.freq(dice).includes(3) ? this.score : 0;
   };
 }
 
 /** Check for small straights. */
 
-class SmallStraight {
+class SmallStraight extends Rule {
   // TODO
+  evalRoll = (dice) => {
+    const d = new Set(dice);
+    if (d.has(2) && d.has(3) && d.has(4) && (d.has(1) || d.has(5))) return this.score;
+
+    if (d.has(3) && d.has(4) && d.has(5) && (d.has(2) || d.has(6))) return this.score;
+  };
 }
 
 /** Check for large straights. */
@@ -110,7 +112,7 @@ const fourOfKind = new SumDistro({ count: 4 });
 const fullHouse = new FullHouse({ score: 25 });
 
 // small/large straights score as 30/40
-const smallStraight = 'TODO';
+const smallStraight = new SmallStraight({ score: 30 });
 const largeStraight = new LargeStraight({ score: 40 });
 
 // yahtzee scores as 50
