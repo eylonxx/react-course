@@ -2,5 +2,6 @@
   position: absolute;
   right: 0;
   left: 0;
-  top: 50px;
+  margin: auto;
+  transform: translate(9.474723992042744px, 14.278366783995793px) rotate(38.13737949884457deg);
 }
