@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import './Jokelist.css';
+
 export default class Jokelist extends Component {
   constructor(props) {
     super(props);
@@ -24,7 +26,7 @@ export default class Jokelist extends Component {
   }
   render() {
     return (
-      <div>
+      <div className="Jokelist">
         <h1>Jokes</h1>
         <ul>
           {this.state.jokes.map((joke) => (
