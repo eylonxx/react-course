@@ -8,27 +8,32 @@ export default class Jokelist extends Component {
     this.state = {
       jokes: [],
     };
-    this.createJoke = this.createJoke.bind(this);
   }
-  async createJoke() {
-    let res = await axios.get('https://icanhazdadjoke.com/', { headers: { Accept: 'application/json' } });
-    return res.data.joke;
-  }
+
   async componentDidMount() {
-    while (this.state.jokes.length < 9) {
+    const jokes = [];
+    while (jokes.length < 10) {
+      let res = await axios.get('https://icanhazdadjoke.com/', { headers: { Accept: 'application/json' } });
       console.log('hi');
-      let joke = await this.createJoke();
-      this.setState((st) => ({ jokes: [...st.jokes, joke] }));
-      //   if (!this.state.jokes.has(joke)) {
-      //     this.setState((st) => ({ jokes: new Set(st.jokes).add(joke) }));
-      //   }
+      jokes.push(res.data.joke);
     }
+    this.setState({ jokes: jokes });
   }
+
   render() {
     return (
       <div className="Jokelist">
-        <h1>Jokes</h1>
-        <ul>
+        <div className="Jokelist-sidebar">
+          <h1 className="Jokelist-title">
+            <span>Dad</span> Jokes
+          </h1>
+          <img
+            src="https://assets.dryicons.com/uploads/icon/svg/8927/0eb14c71-38f2-433a-bfc8-23d9c99b3647.svg"
+            alt="lol"
+          />
+          <button className="Jokelist-getMore">New Jokes</button>
+        </div>
+        <ul className="Jokelist-jokes">
           {this.state.jokes.map((joke) => (
             <li>{joke}</li>
           ))}
