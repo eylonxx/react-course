@@ -39,7 +39,7 @@ export default class Jokelist extends Component {
           />
           <button className="Jokelist-getMore">New Jokes</button>
         </div>
-        <ul className="Jokelist-jokes">
+        <div className="Jokelist-jokes">
           {this.state.jokes.map((joke) => (
             <Joke
               key={joke.id}
@@ -49,7 +49,7 @@ export default class Jokelist extends Component {
               downvote={() => this.handleVote(joke.id, -1)}
             />
           ))}
-        </ul>
+        </div>
       </div>
     );
   }
