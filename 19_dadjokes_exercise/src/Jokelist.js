@@ -21,6 +21,9 @@ export default class Jokelist extends Component {
     }
     this.setState({ jokes: jokes });
   }
+  componentWillUnmount() {
+    console.log('aaaaaaas');
+  }
 
   handleVote(id, delta) {
     this.setState((st) => ({ jokes: st.jokes.map((j) => (j.id === id ? { ...j, votes: j.votes + delta } : j)) }));
