@@ -22,21 +22,25 @@ export default class Jokelist extends Component {
   }
 
   async getJokes() {
-    const jokes = [];
-    while (jokes.length < 10) {
-      let res = await axios.get('https://icanhazdadjoke.com/', { headers: { Accept: 'application/json' } });
-      console.log('hi');
-      if (!this.seenJokes.has(res.data.joke)) {
-        jokes.push({ text: res.data.joke, votes: 0, id: uuidv4() });
+    try {
+      const jokes = [];
+      while (jokes.length < 10) {
+        let res = await axios.get('https://icanhazdadjoke.com/', { headers: { Accept: 'application/json' } });
+        console.log('hi');
+        if (!this.seenJokes.has(res.data.joke)) {
+          jokes.push({ text: res.data.joke, votes: 0, id: uuidv4() });
+        }
       }
+      this.setState(
+        (st) => ({
+          loading: false,
+          jokes: [...st.jokes, ...jokes],
+        }),
+        () => localStorage.setItem('jokes', JSON.stringify(this.state.jokes))
+      );
+    } catch (e) {
+      console.log(e);
     }
-    this.setState(
-      (st) => ({
-        loading: false,
-        jokes: [...st.jokes, ...jokes],
-      }),
-      () => localStorage.setItem('jokes', JSON.stringify(this.state.jokes))
-    );
   }
 
   handleVote(id, delta) {
@@ -59,6 +63,7 @@ export default class Jokelist extends Component {
         </div>
       );
     }
+    let jokes = this.state.jokes.sort((a, b) => b.votes - a.votes);
     return (
       <div className="Jokelist">
         <div className="Jokelist-sidebar">
@@ -70,11 +75,11 @@ export default class Jokelist extends Component {
             alt="lol"
           />
           <button onClick={this.handleClick} className="Jokelist-getMore">
-            New Jokes
+            Fetch Jokes
           </button>
         </div>
         <div className="Jokelist-jokes">
-          {this.state.jokes.map((joke) => (
+          {jokes.map((joke) => (
             <Joke
               key={joke.id}
               text={joke.text}
