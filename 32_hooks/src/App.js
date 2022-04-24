@@ -1,9 +1,11 @@
 import React from 'react';
-import UseStatePractice from './UseStatePractice';
+// import UseStatePractice from './UseStatePractice';
+import SWMovies from './SWMovies';
 export default function App() {
   return (
     <div>
-      <UseStatePractice />
+      {/* <UseStatePractice /> */}
+      <SWMovies />
     </div>
   );
 }
