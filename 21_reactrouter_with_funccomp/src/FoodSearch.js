@@ -8,9 +8,7 @@ export default function FoodSearch() {
   return (
     <div>
       <input onChange={(e) => setVal(e.target.value)} value={val} />
-      <h3>
-        <Link to={`/${val}`}>lol</Link>
-      </h3>
+      <Link to={`/${val}`}>lol</Link>
     </div>
   );
 }
