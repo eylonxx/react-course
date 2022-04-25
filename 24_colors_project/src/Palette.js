@@ -1,5 +1,11 @@
 import React from 'react';
 
 export default function Palette() {
-  return <div>Palette</div>;
+  return (
+    <div className="Palette">
+      {/* navbar here */}
+      <div className="Palette-colors">{/* colorboxes */}</div>
+      {/* footer here */}
+    </div>
+  );
 }
