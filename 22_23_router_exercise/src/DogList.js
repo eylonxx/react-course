@@ -1,11 +1,17 @@
 import React from 'react';
-
+import { useNavigate } from 'react-router-dom';
 export default function DogList(props) {
-  console.log(props);
+  const navigate = useNavigate();
   const getDogs = () => {
     return props.dogs.map((dog) => (
-      <div className="card" style={{ width: '18rem' }}>
-        <img src={dog.src} className="card-img-top" alt={dog.name} />
+      <div
+        onClick={() => {
+          navigate(`/dogs/${dog.name}`);
+        }}
+        className="card"
+        style={{ width: '18rem' }}
+      >
+        <img src={dog.src} height="286px" className="card-img-top" alt={dog.name} />
         <div className="card-body">
           <h5 className="card-title">{dog.name}</h5>
           {dog.facts.map((fact) => {
