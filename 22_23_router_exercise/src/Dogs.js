@@ -7,6 +7,8 @@ import lulu from './imgs/lulu.jpg';
 import chippy from './imgs/chippy.jpg';
 import chanel from './imgs/chanel.jpg';
 import joy from './imgs/joy.jpg';
+import cornelius from './imgs/cornelius.jpg';
+import buddy from './imgs/buddy.jpeg';
 
 export default function Dogs() {
   const dogs = [
@@ -34,6 +36,18 @@ export default function Dogs() {
       src: chippy,
       facts: ['ציפי', 'פוקו פוקו', 'ציפיייייייייייייייי'],
     },
+    {
+      name: 'Cornelius',
+      age: 0.8,
+      src: cornelius,
+      facts: ['חתול בכלל', 'חמוד מאוד', 'ממעמקי הגיהינום'],
+    },
+    {
+      name: 'Buddy',
+      age: 0.8,
+      src: buddy,
+      facts: ['משוגע', 'קוספליי של ביין', 'חי על פרוזק'],
+    },
   ];
   const getDogs = () => {
     return dogs.map((dog) => {
@@ -51,7 +65,7 @@ export default function Dogs() {
       <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <div className="container-fluid">
-            <a className="navbar-brand">Navbar</a>
+            <a className="navbar-brand">חיות השוצ</a>
             <button
               className="navbar-toggler"
               type="button"
