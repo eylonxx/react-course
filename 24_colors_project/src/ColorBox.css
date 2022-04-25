@@ -5,6 +5,7 @@
   display: inline-block;
   position: relative;
   cursor: pointer;
+  margin-bottom: -4px;
 }
 .copy-button {
   width: 100px;
@@ -28,4 +29,29 @@
 .ColorBox:hover .copy-button {
   opacity: 1;
   transition: 0.5s;
+}
+.box-content {
+  box-sizing: border-box;
+  position: absolute;
+  padding: 10px;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  color: black;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+.see-more {
+  background: rgba(255, 255, 255, 0.3);
+  position: absolute;
+  border: none;
+  right: 0;
+  bottom: 0;
+  color: white;
+  width: 60px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  text-transform: uppercase;
 }
