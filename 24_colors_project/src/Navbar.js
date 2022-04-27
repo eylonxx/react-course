@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Slider from 'rc-slider';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
@@ -24,7 +25,7 @@ export default function Navbar(props) {
   return (
     <div className="Navbar">
       <div className="logo">
-        <a href="/">reactcolorpicker</a>
+        <Link to="/">reactcolorpicker</Link>
       </div>
       <div className="slider">
         <div className="slider-container">
