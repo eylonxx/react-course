@@ -1,16 +1,25 @@
 import React, { useState } from 'react';
 import Slider from 'rc-slider';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+
 import 'rc-slider/assets/index.css';
 import './Navbar.css';
 
 export default function Navbar(props) {
   const { sliderLevel, sliderChange, changeFormat } = props;
   const [format, setFormat] = useState('hex');
-  const handleChange = (e) => {
+  const [open, setOpen] = useState(false);
+  const handleFormatChange = (e) => {
     setFormat(e.target.value);
+    setOpen(true);
     changeFormat(e.target.value);
+  };
+  const closeSnackbar = () => {
+    setOpen(false);
   };
   return (
     <div className="Navbar">
@@ -42,12 +51,28 @@ export default function Navbar(props) {
         </div>
       </div>
       <div className="select-container">
-        <Select value={format} onChange={handleChange}>
+        <Select value={format} onChange={handleFormatChange}>
           <MenuItem value="hex">HEX</MenuItem>
           <MenuItem value="rgb">RGB</MenuItem>
           <MenuItem value="rgba">RGBA</MenuItem>
         </Select>
       </div>
+      <Snackbar
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+        open={open}
+        autoHideDuration={3000}
+        message={<span id="message-id">Format Changed to {format.toUpperCase()}</span>}
+        ContentProps={{
+          //accessibility
+          'aria-describedby': 'message-id',
+        }}
+        onClose={closeSnackbar}
+        action={[
+          <IconButton color="inherit" key="close" aria-label="close">
+            <CloseIcon onClick={closeSnackbar} />
+          </IconButton>,
+        ]}
+      />
     </div>
   );
 }
