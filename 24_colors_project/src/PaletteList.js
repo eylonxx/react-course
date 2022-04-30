@@ -9,9 +9,7 @@ export default function PaletteList(props) {
       <MiniPalette />
       <h1>React colors!</h1>
       {palettes.map((palette) => (
-        <Link key={palette.id} to={`/palette/${palette.id}`}>
-          {palette.paletteName}
-        </Link>
+        <MiniPalette {...palette} />
       ))}
     </div>
   );
