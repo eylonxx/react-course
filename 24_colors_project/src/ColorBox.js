@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './ColorBox.css';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 export default function ColorBox(props) {
-  const { name, background } = props;
+  const { name, background, paletteId, id } = props;
   const [copied, setCopied] = useState(false);
 
   const changeCopyState = () => {
@@ -26,7 +27,9 @@ export default function ColorBox(props) {
           </div>
           <button className="copy-button">Copy</button>
         </div>
-        <span className="see-more">More</span>
+        <Link to={`/palette/${paletteId}/${id}`} onClick={(e) => e.stopPropagation()}>
+          <span className="see-more">More</span>
+        </Link>
       </div>
     </CopyToClipboard>
   );
