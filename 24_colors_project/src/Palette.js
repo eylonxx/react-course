@@ -27,7 +27,14 @@ export default function Palette() {
   const palette = generatePalette(findPalette(id));
 
   const colorBoxes = palette.colors[level].map((color) => (
-    <ColorBox background={color[format]} name={color.name} key={color.id} id={color.id} paletteId={id} />
+    <ColorBox
+      background={color[format]}
+      name={color.name}
+      key={color.id}
+      id={color.id}
+      paletteId={id}
+      showLink={true}
+    />
   ));
 
   return (
