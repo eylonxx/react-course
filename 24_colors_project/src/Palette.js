@@ -5,6 +5,7 @@ import seedColors from './seedColors';
 import './Palette.css';
 import { generatePalette } from './colorHelpers';
 import Navbar from './Navbar';
+import Footer from './Footer';
 
 export default function Palette() {
   const [level, setLevel] = useState(500);
@@ -39,12 +40,9 @@ export default function Palette() {
 
   return (
     <div className="Palette">
-      <Navbar sliderLevel={level} sliderChange={changeLevel} changeFormat={changeFormat} />
+      <Navbar sliderLevel={level} sliderChange={changeLevel} changeFormat={changeFormat} showingAllColors />
       <div className="Palette-colors">{colorBoxes}</div>
-      <footer className="Palette-footer">
-        {palette.paletteName}
-        <span className="emoji">{palette.emoji}</span>
-      </footer>
+      <Footer palette={palette} />
     </div>
   );
 }
