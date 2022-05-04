@@ -17,7 +17,7 @@ export default function ColorBox(props) {
 
   const isDarkColor = chroma(background).luminance() <= 0.08;
   //.luminance takse a color value and returns a value between 0-1
-  const isLightColor = chroma(background).luminance() >= 0.6;
+  const isLightColor = chroma(background).luminance() >= 0.5;
 
   return (
     <CopyToClipboard text={background} onCopy={changeCopyState}>
@@ -31,7 +31,7 @@ export default function ColorBox(props) {
           <div className="box-content">
             <span className={isDarkColor && 'light-text'}>{name}</span>
           </div>
-          <button className="copy-button">Copy</button>
+          <button className={`copy-button ${isLightColor && 'dark-text'}`}>Copy</button>
         </div>
         {showLink && (
           <Link to={`/palette/${paletteId}/${id}`} onClick={(e) => e.stopPropagation()}>
