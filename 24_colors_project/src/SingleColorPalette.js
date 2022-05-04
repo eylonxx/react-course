@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import seedColors from './seedColors';
 import { generatePalette } from './colorHelpers';
 import ColorBox from './ColorBox';
@@ -30,12 +30,19 @@ export default function SingleColorPalette() {
   const shades = gatherShades(palette, colorId);
 
   const colorBoxes = shades.map((color) => (
-    <ColorBox key={color.id} name={color.name} background={color[format]} showLink={false} />
+    <ColorBox key={color.name} name={color.name} background={color[format]} showLink={false} />
   ));
   return (
     <div className="Palette SingleColorPalette">
       <Navbar changeFormat={changeFormat} showingAllColors={false} />
-      <div className="Palette-colors">{colorBoxes}</div>
+      <div className="Palette-colors">
+        {colorBoxes}
+        <div className="go-back ColorBox">
+          <Link to={`/palette/${paletteId}`} className="back-button">
+            go back
+          </Link>
+        </div>
+      </div>
       <Footer palette={palette} />
     </div>
   );
