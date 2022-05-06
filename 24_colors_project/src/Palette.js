@@ -33,8 +33,8 @@ export default function Palette() {
       key={color.id}
       id={color.id}
       paletteId={id}
-      showLink={true}
       luminance={chroma(color.hex).luminance()}
+      showingFullPalette={true}
     />
   ));
 

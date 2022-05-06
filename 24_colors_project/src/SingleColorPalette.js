@@ -30,7 +30,7 @@ export default function SingleColorPalette() {
   const shades = gatherShades(palette, colorId);
 
   const colorBoxes = shades.map((color) => (
-    <ColorBox key={color.name} name={color.name} background={color[format]} showLink={false} />
+    <ColorBox key={color.name} name={color.name} background={color[format]} showingFullPalette={false} />
   ));
   return (
     <div className="Palette SingleColorPalette">
