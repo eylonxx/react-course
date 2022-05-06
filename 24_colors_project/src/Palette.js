@@ -4,6 +4,7 @@ import ColorBox from './ColorBox';
 import seedColors from './seedColors';
 import './Palette.css';
 import { generatePalette } from './colorHelpers';
+import chroma from 'chroma-js';
 import Navbar from './Navbar';
 import Footer from './Footer';
 
@@ -11,7 +12,6 @@ export default function Palette() {
   const [level, setLevel] = useState(500);
   const [format, setFormat] = useState('hex');
   const { id } = useParams();
-  console.log(id);
 
   const findPalette = (id) => {
     return seedColors.find((palette) => palette.id === id);
@@ -24,7 +24,6 @@ export default function Palette() {
   const changeFormat = (val) => {
     setFormat(val);
   };
-
   const palette = generatePalette(findPalette(id));
 
   const colorBoxes = palette.colors[level].map((color) => (
@@ -35,6 +34,7 @@ export default function Palette() {
       id={color.id}
       paletteId={id}
       showLink={true}
+      luminance={chroma(color.hex).luminance()}
     />
   ));
 
