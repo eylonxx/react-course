@@ -17,6 +17,7 @@ const styles = {
     textAlign: 'center',
     lineHeight: '30px',
     textTransform: 'uppercase',
+    textDecoration: 'none',
   },
   copyButton: {
     width: '100px',
