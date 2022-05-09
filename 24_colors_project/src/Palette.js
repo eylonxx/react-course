@@ -7,11 +7,20 @@ import { generatePalette } from './colorHelpers';
 import chroma from 'chroma-js';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import { withStyles } from '@mui/styles';
 
-export default function Palette() {
+const styles = {
+  Palette: { height: '100vh', overFlow: 'hidden', display: 'flex', flexDirection: 'column' },
+  colors: {
+    height: '90%',
+  },
+};
+
+function Palette(props) {
   const [level, setLevel] = useState(500);
   const [format, setFormat] = useState('hex');
   const { id } = useParams();
+  const { classes } = props;
 
   const findPalette = (id) => {
     return seedColors.find((palette) => palette.id === id);
@@ -39,10 +48,11 @@ export default function Palette() {
   ));
 
   return (
-    <div className="Palette">
+    <div className={classes.Palette}>
       <Navbar sliderLevel={level} sliderChange={changeLevel} changeFormat={changeFormat} showingAllColors />
-      <div className="Palette-colors">{colorBoxes}</div>
+      <div className={classes.colors}>{colorBoxes}</div>
       <Footer palette={palette} />
     </div>
   );
 }
+export default withStyles(styles)(Palette);
