@@ -13,11 +13,13 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { ChromePicker } from 'react-color';
+import DraggableColorBox from './DraggableColorBox';
 
 const drawerWidth = 400;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
   flexGrow: 1,
+  height: 'calc(100vh - 64px)',
   padding: theme.spacing(3),
   transition: theme.transitions.create('margin', {
     easing: theme.transitions.easing.sharp,
@@ -62,6 +64,8 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function NewPaletteForm() {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
+  const [currentColor, setCurrentColor] = useState('#404040');
+  const [colors, setColors] = useState(['#404040', 'purple']);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -69,6 +73,14 @@ export default function NewPaletteForm() {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleUpdateColor = (newColor) => {
+    setCurrentColor(newColor.hex);
+  };
+
+  const addNewColor = () => {
+    setColors([...colors, currentColor]);
   };
 
   return (
@@ -119,13 +131,16 @@ export default function NewPaletteForm() {
             Random Color
           </Button>
         </div>
-        <ChromePicker />
-        <Button variant="contained" color="primary">
+        <ChromePicker color={currentColor} onChangeComplete={handleUpdateColor} />
+        <Button variant="contained" color="primary" onClick={addNewColor} style={{ backgroundColor: currentColor }}>
           Add Color
         </Button>
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
+        {colors.map((color) => (
+          <DraggableColorBox color={color} />
+        ))}
       </Main>
     </Box>
   );
