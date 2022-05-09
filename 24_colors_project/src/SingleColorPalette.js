@@ -5,48 +5,19 @@ import { generatePalette } from './colorHelpers';
 import ColorBox from './ColorBox';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import chroma from 'chroma-js';
+import './ColorBox.css';
+import styles from './styles/PaletteStyles';
 import { withStyles } from '@mui/styles';
-const styles = {
-  Palette: { height: '100vh', overFlow: 'hidden', display: 'flex', flexDirection: 'column' },
-  colors: {
-    height: '90%',
-  },
-  goBack: {
-    width: '20%',
-    margin: '0 auto',
-    height: '50%',
-    display: 'inline-block',
-    position: 'relative',
-    cursor: 'pointer',
-    marginBottom: '-4px',
-    opacity: '1',
-    backgroundColor: 'black',
-    '& a': {
-      width: '100px',
-      height: '30px',
-      position: 'absolute',
-      color: 'white',
-      display: 'inline-block',
-      top: '50%',
-      left: '50%',
-      marginLeft: '-50px' /*offset*/,
-      marginTop: '-15px',
-      textAlign: 'center',
-      outline: 'none',
-      background: 'rgba(255, 255, 255, 0.3)',
-      fontSize: '1rem',
-      lineHeight: '30px',
-      border: 'none',
-      textTransform: 'uppercase',
-      textDecoration: 'none',
-    },
-  },
-};
 
 function SingleColorPalette(props) {
   const { paletteId, colorId } = useParams();
   const [format, setFormat] = useState('hex');
-  const { classes } = props;
+  const { classes, luminance } = props;
+
+  const textColor = (threshold) => {
+    return luminance < threshold ? 'light-text' : 'dark-text';
+  };
 
   const findPalette = (id) => {
     return seedColors.find((palette) => palette.id === id);
@@ -68,12 +39,18 @@ function SingleColorPalette(props) {
   const shades = gatherShades(palette, colorId);
 
   const colorBoxes = shades.map((color) => (
-    <ColorBox key={color.name} name={color.name} background={color[format]} showingFullPalette={false} />
+    <ColorBox
+      key={color.name}
+      name={color.name}
+      background={color[format]}
+      showingFullPalette={false}
+      luminance={chroma(color.hex).luminance()}
+    />
   ));
   return (
     <div className={classes.Palette}>
       <Navbar changeFormat={changeFormat} showingAllColors={false} />
-      <div className={classes.colors}>
+      <div className={`${classes.colors} ${textColor(0.4)}`}>
         {colorBoxes}
         <div className={classes.goBack}>
           <Link to={`/palette/${paletteId}`}>go back</Link>

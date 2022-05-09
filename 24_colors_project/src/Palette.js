@@ -2,19 +2,12 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ColorBox from './ColorBox';
 import seedColors from './seedColors';
-import './Palette.css';
 import { generatePalette } from './colorHelpers';
 import chroma from 'chroma-js';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import styles from './styles/PaletteStyles';
 import { withStyles } from '@mui/styles';
-
-const styles = {
-  Palette: { height: '100vh', overFlow: 'hidden', display: 'flex', flexDirection: 'column' },
-  colors: {
-    height: '90%',
-  },
-};
 
 function Palette(props) {
   const [level, setLevel] = useState(500);

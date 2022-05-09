@@ -6,12 +6,12 @@ import MenuItem from '@mui/material/MenuItem';
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-
 import 'rc-slider/assets/index.css';
-import './Navbar.css';
+import { withStyles } from '@mui/styles';
+import styles from './styles/NavbarStyles';
 
-export default function Navbar(props) {
-  const { sliderLevel, sliderChange, changeFormat } = props;
+function Navbar(props) {
+  const { sliderLevel, sliderChange, changeFormat, classes } = props;
   const [format, setFormat] = useState('hex');
   const [open, setOpen] = useState(false);
   const handleFormatChange = (e) => {
@@ -23,13 +23,13 @@ export default function Navbar(props) {
     setOpen(false);
   };
   return (
-    <div className="Navbar">
-      <div className="logo">
+    <div className={classes.navbar}>
+      <div className={classes.logo}>
         <Link to="/">reactcolorpicker</Link>
       </div>
-      <div className="slider">
+      <div className={classes.slider}>
         {props.showingAllColors && (
-          <div className="slider-container">
+          <div>
             <span>Level: {sliderLevel}</span>
             <Slider
               defaultValue={sliderLevel}
@@ -53,7 +53,7 @@ export default function Navbar(props) {
           </div>
         )}
       </div>
-      <div className="select-container">
+      <div className={classes.selectContainer}>
         <Select value={format} onChange={handleFormatChange}>
           <MenuItem value="hex">HEX</MenuItem>
           <MenuItem value="rgb">RGB</MenuItem>
@@ -79,3 +79,4 @@ export default function Navbar(props) {
     </div>
   );
 }
+export default withStyles(styles)(Navbar);
