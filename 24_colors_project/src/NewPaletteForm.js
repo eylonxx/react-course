@@ -16,6 +16,7 @@ import { ChromePicker } from 'react-color';
 import DraggableColorBox from './DraggableColorBox';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { useNavigate } from 'react-router-dom';
+import { palette } from '@mui/system';
 
 const drawerWidth = 400;
 
@@ -68,7 +69,10 @@ export default function NewPaletteForm(props) {
   const [open, setOpen] = useState(false);
   const [currentColor, setCurrentColor] = useState('#404040');
   const [colors, setColors] = useState([{ color: '#100100', name: 'yes' }]);
-  const [newName, setNewName] = useState('');
+  const [name, setName] = useState({
+    colorName: '',
+    paletteName: '',
+  });
   const navigate = useNavigate();
 
   const handleDrawerOpen = () => {
@@ -83,18 +87,19 @@ export default function NewPaletteForm(props) {
     setCurrentColor(newColor.hex);
   };
 
-  const handleChange = (evt) => {
-    setNewName(evt.target.value);
+  const handleChange = (e) => {
+    //handles color name or palette name changes
+    setName({ ...name, [e.target.name]: e.target.value });
   };
 
   const addNewColor = () => {
-    const newColor = { color: currentColor, name: newName };
+    const newColor = { color: currentColor, name: name.colorName };
     setColors([...colors, newColor]);
-    setNewName('');
+    setName('');
   };
 
   const handleSubmit = () => {
-    let newName = 'new test palette';
+    let newName = name.paletteName;
     const newPalette = { paletteName: newName, id: newName.toLowerCase().replace(/ /g, '-'), colors: colors };
     props.savePalette(newPalette);
     navigate('/');
@@ -109,7 +114,10 @@ export default function NewPaletteForm(props) {
       //current color for current color being used
       return colors.every(({ color }) => color !== currentColor);
     });
-  }, [colors, currentColor]);
+    ValidatorForm.addValidationRule('isPaletteNameUnique', (value) => {
+      return props.palettes.every(({ paletteName }) => palette.toLowerCase() !== value.toLowerCase());
+    });
+  }, [colors, currentColor, props.palettes]);
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -128,9 +136,19 @@ export default function NewPaletteForm(props) {
           <Typography variant="h6" noWrap component="div">
             Create A Palette
           </Typography>
-          <Button variant="contained" color="primary" onClick={handleSubmit}>
-            Save Palette
-          </Button>
+          <ValidatorForm onSubmit={handleSubmit}>
+            <TextValidator
+              label="Palette Name"
+              value={name.paletteName}
+              name="paletteName"
+              onChange={handleChange}
+              validators={['required', 'isPaletteNameUnique']}
+              errorMessages={['Enter a palette name!', 'Palette name already taken!']}
+            />
+            <Button type="submit" variant="contained" color="primary">
+              Save Palette
+            </Button>
+          </ValidatorForm>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -165,8 +183,9 @@ export default function NewPaletteForm(props) {
         <ChromePicker color={currentColor} onChangeComplete={handleUpdateColor} />
         <ValidatorForm onSubmit={addNewColor} instantValidate={false}>
           <TextValidator
-            value={newName}
+            value={name.colorName}
             onChange={handleChange}
+            name="colorName"
             validators={['required', 'isColorNameUnique', 'isColorUnique']}
             errorMessages={['this field is required', 'Color name must be unique!', 'Color must be unique!']}
           />
