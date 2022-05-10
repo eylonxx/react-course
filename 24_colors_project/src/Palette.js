@@ -13,10 +13,10 @@ function Palette(props) {
   const [level, setLevel] = useState(500);
   const [format, setFormat] = useState('hex');
   const { id } = useParams();
-  const { classes } = props;
+  const { classes, palettes } = props;
 
   const findPalette = (id) => {
-    return seedColors.find((palette) => palette.id === id);
+    return palettes.find((palette) => palette.id === id);
   };
 
   const changeLevel = (newLevel) => {
