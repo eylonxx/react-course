@@ -16,7 +16,6 @@ import { ChromePicker } from 'react-color';
 import DraggableColorBox from './DraggableColorBox';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { useNavigate } from 'react-router-dom';
-import { palette } from '@mui/system';
 
 const drawerWidth = 400;
 
@@ -68,7 +67,7 @@ export default function NewPaletteForm(props) {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [currentColor, setCurrentColor] = useState('#404040');
-  const [colors, setColors] = useState([{ color: '#100100', name: 'yes' }]);
+  const [colors, setColors] = useState([{ color: '#999999', name: 'yes' }]);
   const [name, setName] = useState({
     colorName: '',
     paletteName: '',
@@ -95,7 +94,11 @@ export default function NewPaletteForm(props) {
   const addNewColor = () => {
     const newColor = { color: currentColor, name: name.colorName };
     setColors([...colors, newColor]);
-    setName('');
+    setName({ colorName: '', paletteName: '' });
+  };
+
+  const removeColor = (colorName) => {
+    setColors(colors.filter((color) => color.name !== colorName));
   };
 
   const handleSubmit = () => {
@@ -115,7 +118,7 @@ export default function NewPaletteForm(props) {
       return colors.every(({ color }) => color !== currentColor);
     });
     ValidatorForm.addValidationRule('isPaletteNameUnique', (value) => {
-      return props.palettes.every(({ paletteName }) => palette.toLowerCase() !== value.toLowerCase());
+      return props.palettes.every(({ paletteName }) => paletteName.toLowerCase() !== value.toLowerCase());
     });
   }, [colors, currentColor, props.palettes]);
 
@@ -197,7 +200,7 @@ export default function NewPaletteForm(props) {
       <Main open={open}>
         <DrawerHeader />
         {colors.map((color) => (
-          <DraggableColorBox color={color.color} name={color.name} />
+          <DraggableColorBox color={color.color} name={color.name} handleClick={() => removeColor(color.name)} />
         ))}
       </Main>
     </Box>
