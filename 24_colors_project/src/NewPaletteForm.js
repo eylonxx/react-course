@@ -16,6 +16,8 @@ import { ChromePicker } from 'react-color';
 import DraggableColorBox from './DraggableColorBox';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { useNavigate } from 'react-router-dom';
+import DraggableColorList from './DraggableColorList';
+import { arrayMove } from 'react-sortable-hoc';
 
 const drawerWidth = 400;
 
@@ -108,6 +110,10 @@ export default function NewPaletteForm(props) {
     navigate('/');
   };
 
+  const onSortEnd = ({ oldIndex, newIndex }) => {
+    setColors((colors) => arrayMove(colors, oldIndex, newIndex));
+  };
+
   useEffect(() => {
     ValidatorForm.addValidationRule('isColorNameUnique', (value) => {
       //value for text input
@@ -184,6 +190,7 @@ export default function NewPaletteForm(props) {
           </Button>
         </div>
         <ChromePicker color={currentColor} onChangeComplete={handleUpdateColor} />
+
         <ValidatorForm onSubmit={addNewColor} instantValidate={false}>
           <TextValidator
             value={name.colorName}
@@ -199,9 +206,7 @@ export default function NewPaletteForm(props) {
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
-        {colors.map((color) => (
-          <DraggableColorBox color={color.color} name={color.name} handleClick={() => removeColor(color.name)} />
-        ))}
+        <DraggableColorList distance={1} colors={colors} removeColor={removeColor} axis="xy" onSortEnd={onSortEnd} />
       </Main>
     </Box>
   );
