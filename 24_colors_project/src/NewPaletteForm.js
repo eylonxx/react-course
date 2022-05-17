@@ -113,6 +113,10 @@ export default function NewPaletteForm(props) {
     setColors((colors) => arrayMove(colors, oldIndex, newIndex));
   };
 
+  const clearColors = () => {
+    setColors([]);
+  };
+
   useEffect(() => {
     ValidatorForm.addValidationRule('isColorNameUnique', (value) => {
       //value for text input
@@ -181,7 +185,7 @@ export default function NewPaletteForm(props) {
         <Divider />
         <Typography variant="h4">Design Your Palette</Typography>
         <div>
-          <Button variant="contained" color="error">
+          <Button variant="contained" color="error" onClick={clearColors}>
             Clear
           </Button>
           <Button variant="contained" color="primary">
