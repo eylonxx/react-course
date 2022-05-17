@@ -13,7 +13,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { ChromePicker } from 'react-color';
-import DraggableColorBox from './DraggableColorBox';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { useNavigate } from 'react-router-dom';
 import DraggableColorList from './DraggableColorList';
@@ -69,7 +68,7 @@ export default function NewPaletteForm(props) {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [currentColor, setCurrentColor] = useState('#404040');
-  const [colors, setColors] = useState([{ color: '#999999', name: 'yes' }]);
+  const [colors, setColors] = useState(props.palettes[0].colors);
   const [name, setName] = useState({
     colorName: '',
     paletteName: '',
@@ -142,12 +141,12 @@ export default function NewPaletteForm(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
+          <Typography variant="h5" noWrap component="div">
             Create A Palette
           </Typography>
-          <ValidatorForm onSubmit={handleSubmit}>
+          <ValidatorForm style={{ display: 'flex' }} onSubmit={handleSubmit}>
             <TextValidator
-              label="Palette Name"
+              label="Palette name"
               value={name.paletteName}
               name="paletteName"
               onChange={handleChange}

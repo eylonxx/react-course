@@ -14,13 +14,12 @@ const styles = {
     marginBottom: '-4px',
     '&:hover svg': {
       color: 'white',
-      transform: 'scale(1.5)',
+      transform: 'scale(1.3)',
+      transition: 'all 0.3s ease-in-out',
     },
   },
   deleteIcon: {
-    '&svg': {
-      transition: 'all 1.3s ease-in-out',
-    },
+    color: 'black',
   },
   boxContent: {
     boxSizing: 'border-box',
