@@ -64,6 +64,10 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end',
 }));
 
+NewPaletteForm.defaultProps = {
+  maxColors: 20,
+};
+
 export default function NewPaletteForm(props) {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
@@ -73,6 +77,7 @@ export default function NewPaletteForm(props) {
     colorName: '',
     paletteName: '',
   });
+  const paletteIsFull = colors.length === props.maxColors;
   const navigate = useNavigate();
 
   const handleDrawerOpen = () => {
@@ -115,6 +120,13 @@ export default function NewPaletteForm(props) {
 
   const clearColors = () => {
     setColors([]);
+  };
+
+  const addRandomColor = () => {
+    const allColors = props.palettes.map((p) => p.colors).flat();
+    let rand = Math.floor(Math.random() * allColors.length);
+    const randomColor = allColors[rand];
+    setColors((colors) => [...colors, randomColor]);
   };
 
   useEffect(() => {
@@ -188,7 +200,7 @@ export default function NewPaletteForm(props) {
           <Button variant="contained" color="error" onClick={clearColors}>
             Clear
           </Button>
-          <Button variant="contained" color="primary">
+          <Button variant="contained" color="primary" disabled={paletteIsFull} onClick={addRandomColor}>
             Random Color
           </Button>
         </div>
@@ -202,8 +214,14 @@ export default function NewPaletteForm(props) {
             validators={['required', 'isColorNameUnique', 'isColorUnique']}
             errorMessages={['this field is required', 'Color name must be unique!', 'Color must be unique!']}
           />
-          <Button variant="contained" color="primary" type="submit" style={{ backgroundColor: currentColor }}>
-            Add Color
+          <Button
+            variant="contained"
+            color="primary"
+            disabled={paletteIsFull}
+            type="submit"
+            style={{ backgroundColor: paletteIsFull ? 'lightGrey' : currentColor }}
+          >
+            {paletteIsFull ? 'Palette Full' : 'Add Color'}
           </Button>
         </ValidatorForm>
       </Drawer>
