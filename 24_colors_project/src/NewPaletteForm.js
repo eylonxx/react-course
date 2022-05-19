@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -8,12 +8,11 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { ChromePicker } from 'react-color';
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { useNavigate } from 'react-router-dom';
 import DraggableColorList from './DraggableColorList';
 import { arrayMove } from 'react-sortable-hoc';
 import PaletteFormNav from './PaletteFormNav';
+import ColorPickerForm from './ColorPickerForm';
 
 const drawerWidth = 400;
 
@@ -109,17 +108,6 @@ export default function NewPaletteForm(props) {
     setColors((colors) => [...colors, randomColor]);
   };
 
-  useEffect(() => {
-    ValidatorForm.addValidationRule('isColorNameUnique', (value) => {
-      //value for text input
-      return colors.every(({ name }) => name.toLowerCase() !== value.toLowerCase());
-    });
-    ValidatorForm.addValidationRule('isColorUnique', () => {
-      //current color for current color being used
-      return colors.every(({ color }) => color !== currentColor);
-    });
-  }, [colors, currentColor, props.palettes]);
-
   return (
     <Box sx={{ display: 'flex' }}>
       <PaletteFormNav
@@ -159,26 +147,15 @@ export default function NewPaletteForm(props) {
             Random Color
           </Button>
         </div>
-        <ChromePicker color={currentColor} onChangeComplete={handleUpdateColor} />
-
-        <ValidatorForm onSubmit={addNewColor} instantValidate={false}>
-          <TextValidator
-            value={name.colorName}
-            onChange={handleChange}
-            name="colorName"
-            validators={['required', 'isColorNameUnique', 'isColorUnique']}
-            errorMessages={['this field is required', 'Color name must be unique!', 'Color must be unique!']}
-          />
-          <Button
-            variant="contained"
-            color="primary"
-            disabled={paletteIsFull}
-            type="submit"
-            style={{ backgroundColor: paletteIsFull ? 'lightGrey' : currentColor }}
-          >
-            {paletteIsFull ? 'Palette Full' : 'Add Color'}
-          </Button>
-        </ValidatorForm>
+        <ColorPickerForm
+          handleUpdateColor={handleUpdateColor}
+          paletteIsFull={paletteIsFull}
+          addNewColor={addNewColor}
+          handleChange={handleChange}
+          currentColor={currentColor}
+          colorName={name.colorName}
+          colors={colors}
+        />
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
