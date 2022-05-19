@@ -2,9 +2,28 @@ import React, { useEffect } from 'react';
 import Button from '@mui/material/Button';
 import { ChromePicker } from 'react-color';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import { withStyles } from '@mui/styles';
 
-export default function ColorPickerForm(props) {
-  const { colors, currentColor, handleChange, handleUpdateColor, addNewColor, paletteIsFull, colorName } = props;
+const styles = {
+  picker: {
+    width: '300px !important',
+    marginTop: '2rem',
+  },
+  addColor: {
+    width: '100%',
+    padding: '1rem !important',
+    marginTop: '1rem',
+    fontSize: '2rem',
+  },
+  colorNameInput: {
+    width: '100%',
+    height: '70px',
+  },
+};
+
+function ColorPickerForm(props) {
+  const { colors, currentColor, handleChange, handleUpdateColor, addNewColor, paletteIsFull, colorName, classes } =
+    props;
 
   useEffect(() => {
     ValidatorForm.addValidationRule('isColorNameUnique', (value) => {
@@ -19,12 +38,16 @@ export default function ColorPickerForm(props) {
 
   return (
     <div>
-      <ChromePicker color={currentColor} onChangeComplete={handleUpdateColor} />
+      <ChromePicker className={classes.picker} color={currentColor} onChangeComplete={handleUpdateColor} />
 
       <ValidatorForm onSubmit={addNewColor} instantValidate={false}>
         <TextValidator
+          className={classes.colorNameInput}
           value={colorName}
+          variant="filled"
           onChange={handleChange}
+          placeholder="Color Name"
+          margin="normal"
           name="colorName"
           validators={['required', 'isColorNameUnique', 'isColorUnique']}
           errorMessages={['this field is required', 'Color name must be unique!', 'Color must be unique!']}
@@ -34,6 +57,7 @@ export default function ColorPickerForm(props) {
           color="primary"
           disabled={paletteIsFull}
           type="submit"
+          className={classes.addColor}
           style={{ backgroundColor: paletteIsFull ? 'lightGrey' : currentColor }}
         >
           {paletteIsFull ? 'Palette Full' : 'Add Color'}
@@ -42,3 +66,4 @@ export default function ColorPickerForm(props) {
     </div>
   );
 }
+export default withStyles(styles)(ColorPickerForm);

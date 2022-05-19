@@ -13,8 +13,26 @@ import DraggableColorList from './DraggableColorList';
 import { arrayMove } from 'react-sortable-hoc';
 import PaletteFormNav from './PaletteFormNav';
 import ColorPickerForm from './ColorPickerForm';
+import { withStyles } from '@mui/styles';
 
 const drawerWidth = 400;
+
+const styles = {
+  container: {
+    width: '90%',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttons: {
+    width: '100%',
+  },
+  button: {
+    width: '50%',
+  },
+};
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
   flexGrow: 1,
@@ -47,7 +65,7 @@ NewPaletteForm.defaultProps = {
   maxColors: 20,
 };
 
-export default function NewPaletteForm(props) {
+function NewPaletteForm(props) {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [currentColor, setCurrentColor] = useState('#404040');
@@ -56,6 +74,7 @@ export default function NewPaletteForm(props) {
     colorName: '',
     paletteName: '',
   });
+  const { classes } = props;
   const paletteIsFull = colors.length === props.maxColors;
   const navigate = useNavigate();
 
@@ -125,6 +144,8 @@ export default function NewPaletteForm(props) {
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             boxSizing: 'border-box',
+            display: 'flex',
+            alignItems: 'center',
           },
         }}
         variant="persistent"
@@ -138,24 +159,34 @@ export default function NewPaletteForm(props) {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <Typography variant="h4">Design Your Palette</Typography>
-        <div>
-          <Button variant="contained" color="error" onClick={clearColors}>
-            Clear
-          </Button>
-          <Button variant="contained" color="primary" disabled={paletteIsFull} onClick={addRandomColor}>
-            Random Color
-          </Button>
+        <div className={classes.container}>
+          <Typography variant="h4" gutterBottom>
+            Design Your Palette
+          </Typography>
+          <div className={classes.buttons}>
+            <Button className={classes.button} variant="contained" color="error" onClick={clearColors}>
+              Clear Palette
+            </Button>
+            <Button
+              className={classes.button}
+              variant="contained"
+              color="primary"
+              disabled={paletteIsFull}
+              onClick={addRandomColor}
+            >
+              Random Color
+            </Button>
+          </div>
+          <ColorPickerForm
+            handleUpdateColor={handleUpdateColor}
+            paletteIsFull={paletteIsFull}
+            addNewColor={addNewColor}
+            handleChange={handleChange}
+            currentColor={currentColor}
+            colorName={name.colorName}
+            colors={colors}
+          />
         </div>
-        <ColorPickerForm
-          handleUpdateColor={handleUpdateColor}
-          paletteIsFull={paletteIsFull}
-          addNewColor={addNewColor}
-          handleChange={handleChange}
-          currentColor={currentColor}
-          colorName={name.colorName}
-          colors={colors}
-        />
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
@@ -164,3 +195,4 @@ export default function NewPaletteForm(props) {
     </Box>
   );
 }
+export default withStyles(styles)(NewPaletteForm);
