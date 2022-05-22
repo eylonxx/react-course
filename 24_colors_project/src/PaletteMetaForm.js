@@ -8,7 +8,6 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 export default function PaletteMetaForm(props) {
-  //props are being passed down newPaletteform -> Paletteformnav -> Palettemetaform
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
